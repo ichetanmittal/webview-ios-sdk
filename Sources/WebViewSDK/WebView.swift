@@ -41,17 +41,23 @@ public struct WebViewContainer: View {
     
     public var body: some View {
         NavigationView {
-            WebView(url: url, config: config, onDismiss: {
-                dismiss()
-            })
-            .navigationBarItems(leading: Button(action: {
-                dismiss()
-            }) {
-                HStack {
-                    Image(systemName: "xmark")
-                    Text("Close")
-                }
-            })
+            VStack {
+                Text("WebView SDK Test")
+                    .font(.headline)
+                    .padding()
+                
+                WebView(url: url, config: config, onDismiss: {
+                    dismiss()
+                })
+                .navigationBarItems(leading: Button(action: {
+                    dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "xmark")
+                        Text("Close")
+                    }
+                })
+            }
         }
     }
 }
