@@ -29,7 +29,12 @@ public struct WebViewContainer: View {
     let config: WebViewConfig
     @Environment(\.dismiss) private var dismiss
     
-    public init(url: URL, config: WebViewConfig = WebViewConfig(url: url)) {
+    public init(url: URL) {
+        self.url = url
+        self.config = WebViewConfig(url: url)
+    }
+    
+    public init(url: URL, config: WebViewConfig) {
         self.url = url
         self.config = config
     }
