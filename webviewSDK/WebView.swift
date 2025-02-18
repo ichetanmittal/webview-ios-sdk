@@ -1,12 +1,20 @@
 import SwiftUI
 import WebKit
 
-struct WebView: UIViewRepresentable {
+internal struct WebView: UIViewRepresentable {
     let url: URL
-    @Environment(\.dismiss) var dismiss
+    let config: WebViewConfig
     
     func makeUIView(context: Context) -> WKWebView {
-        return WKWebView()
+        let preferences = WKWebpagePreferences()
+        preferences.allowsContentJavaScript = true
+        
+        let configuration = WKWebViewConfiguration()
+        configuration.defaultWebpagePreferences = preferences
+        
+        let webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.allowsBackForwardNavigationGestures = config.allowsBackForwardNavigation
+        return webView
     }
     
     func updateUIView(_ webView: WKWebView, context: Context) {
@@ -15,21 +23,29 @@ struct WebView: UIViewRepresentable {
     }
 }
 
-struct WebViewContainer: View {
+public struct WebViewContainer: View {
     let url: URL
+    let config: WebViewConfig
     @Environment(\.dismiss) var dismiss
     
-    var body: some View {
+    public init(url: URL, config: WebViewConfig = WebViewConfig(url: url)) {
+        self.url = url
+        self.config = config
+    }
+    
+    public var body: some View {
         NavigationView {
-            WebView(url: url)
-                .navigationBarItems(leading: Button(action: {
-                    dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Back")
-                    }
-                })
+            ZStack {
+                WebView(url: url, config: config)
+                    .navigationBarItems(leading: Button(action: {
+                        dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Back")
+                        }
+                    })
+            }
         }
     }
 }
