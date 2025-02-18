@@ -2,9 +2,9 @@
 import PackageDescription
 
 let package = Package(
-    name: "WebViewSDK",
+    name: "webview-ios-sdk",
     platforms: [
-        .iOS(.v15) // Updated to iOS 15 to match the required features
+        .iOS(.v15)
     ],
     products: [
         .library(
@@ -15,7 +15,6 @@ let package = Package(
     targets: [
         .target(
             name: "WebViewSDK",
-            dependencies: [],
-            path: "Sources/WebViewSDK") // Updated path
+            dependencies: [])
     ]
 )
