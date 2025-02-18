@@ -9,12 +9,14 @@ let package = Package(
     products: [
         .library(
             name: "WebViewSDK",
+            type: .dynamic,
             targets: ["WebViewSDK"]),
     ],
     dependencies: [],
     targets: [
         .target(
             name: "WebViewSDK",
-            dependencies: [])
+            dependencies: [],
+            path: "Sources/WebViewSDK")
     ]
 )
