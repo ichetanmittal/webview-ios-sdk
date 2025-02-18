@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "webview-ios-sdk",
+    name: "WebViewSDK",
     platforms: [
         .iOS(.v15)
     ],
