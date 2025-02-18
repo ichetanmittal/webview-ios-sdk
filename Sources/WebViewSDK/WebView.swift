@@ -4,6 +4,7 @@ import WebKit
 internal struct WebView: UIViewRepresentable {
     let url: URL
     let config: WebViewConfig
+    var onDismiss: (() -> Void)?
     
     func makeUIView(context: Context) -> WKWebView {
         let preferences = WKWebpagePreferences()
@@ -26,7 +27,7 @@ internal struct WebView: UIViewRepresentable {
 public struct WebViewContainer: View {
     let url: URL
     let config: WebViewConfig
-    @Environment(\.dismiss) var dismiss
+    @Environment(\.dismiss) private var dismiss
     
     public init(url: URL, config: WebViewConfig = WebViewConfig(url: url)) {
         self.url = url
@@ -35,17 +36,17 @@ public struct WebViewContainer: View {
     
     public var body: some View {
         NavigationView {
-            ZStack {
-                WebView(url: url, config: config)
-                    .navigationBarItems(leading: Button(action: {
-                        dismiss()
-                    }) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("Back")
-                        }
-                    })
-            }
+            WebView(url: url, config: config, onDismiss: {
+                dismiss()
+            })
+            .navigationBarItems(leading: Button(action: {
+                dismiss()
+            }) {
+                HStack {
+                    Image(systemName: "xmark")
+                    Text("Close")
+                }
+            })
         }
     }
 }
